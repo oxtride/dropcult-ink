@@ -33,6 +33,7 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -157,6 +158,9 @@
 
         /* --- ПОДВАЛ --- */
         footer {
+            position: absolute;
+            bottom: 15px;
+            width: 100%;
             text-align: center;
             margin-top: 90px;
             color: var(--text-muted);
@@ -237,11 +241,12 @@
                 <!-- Замени src на ссылку на скетч собачки -->
                 <img src="cat2.png" alt="Doodle">
             </div>
-      <footer>
-          dropcult © 2026
-      </footer>
 
     </div>
+
+    <footer>
+          dropcult © 2026
+    </footer>
 
     <script>
         // JS: Простая анимация появления при загрузке
