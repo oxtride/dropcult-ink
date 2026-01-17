@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASAÍ Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS СТИЛИ --- */
+        :root {
+            --bg-color: #fffbf8;
+            --text-main: #4a4a4a;
+            --text-muted: #8c8c8c;
+            --accent-brown: #8d7b72;
+            --label-color: #b0a99f;
+            --border-color: #d8c8c0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 1s ease, transform 1s ease;
+            transform: translateY(20px);
+        }
+
+        .container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- ВЕРХНЯЯ ЧАСТЬ --- */
+        .header-section {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .cat-image { flex: 1; max-width: 200px; }
+        .cat-image img {
+            width: 100%;
+            filter: sepia(0.3) contrast(0.9);
+            mix-blend-mode: multiply;
+        }
+
+        .bio-content { flex: 1.5; padding-top: 10px; }
+
+        h1 {
+            font-size: 3rem;
+            color: var(--accent-brown);
+            font-weight: 800;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .short-bio { margin-bottom: 10px; }
+
+        .links { margin-bottom: 20px; }
+        .links a {
+            color: var(--text-muted);
+            text-decoration: underline;
+            margin-right: 8px;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .links a:hover { color: var(--accent-brown); }
+
+        /* --- МУЗЫКАЛЬНЫЙ ДРОППЕР (НОВОЕ) --- */
+        .music-wrapper {
+            background-color: #fff;
+            border: 2px solid var(--border-color);
+            border-radius: 18px;
+            margin-bottom: 30px;
+            overflow: hidden; /* Скрывает содержимое при закрытии */
+            transition: all 0.4s ease; /* Плавная анимация рамки */
+            box-shadow: 4px 4px 0px rgba(216, 200, 192, 0.3);
+        }
+
+        /* Заголовок-кнопка */
+        .music-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 800;
+            color: var(--accent-brown);
+            user-select: none;
+            background-color: #fff;
+        }
+
+        .music-header:hover {
+            background-color: #fafafa;
+        }
+
+        /* Стрелочка */
+        .arrow-icon {
+            transition: transform 0.3s ease;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        
+        /* Поворот стрелки при открытии */
+        .music-wrapper.open .arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Скрытая часть (сам плеер) */
+        .music-content {
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
+            padding: 0 20px;
+        }
+
+        /* Стиль открытого состояния */
+        .music-wrapper.open .music-content {
+            max-height: 200px; /* Достаточно высоты для плеера */
+            opacity: 1;
+            padding-bottom: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #f0ebe8; /* Тонкая линия разделителя */
+        }
+
+        /* Внутренности плеера */
+        .player-inner {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .album-cover {
+            width: 55px;
+            height: 55px;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #eee;
+            flex-shrink: 0;
+        }
+
+        .album-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* УБРАНА АНИМАЦИЯ spin */
+
+        .track-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .song-title {
+            font-weight: 800;
+            color: var(--accent-brown);
+            font-size: 1rem;
+            line-height: 1.2;
+        }
+
+        .artist-name {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background-color: #eee;
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--accent-brown);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            color: var(--label-color);
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .play-btn {
+            background: var(--accent-brown);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            transition: transform 0.2s;
+        }
+        .play-btn:hover { transform: scale(1.1); }
+        .play-btn svg { width: 14px; height: 14px; fill: currentColor; }
+
+        /* --- ИНФО БЛОК --- */
+        .info-box {
+            border: 3px solid var(--border-color);
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(255,255,255,0.4);
+        }
+
+        .col { flex: 1; }
+        
+        .likes-block p { margin-bottom: 8px; }
+        .label { font-weight: 800; color: var(--label-color); margin-right: 5px; }
+
+        .col.center-img { text-align: center; flex: 0.6; }
+        .col.center-img img { width: 80px; opacity: 0.7; }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 600px) {
+            .header-section { flex-direction: column; align-items: center; text-align: center; }
+            .info-box { flex-direction: column; gap: 20px; }
+            .col.center-img { order: 3; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainContainer">
+        
+        <!-- Верхняя секция -->
+        <header class="header-section">
+            <div class="cat-image">
+                <img src="cat.png" alt="Sketch cat">
+            </div>
+            
+            <div class="bio-content">
+                <h1>dropcult</h1>
+                <div class="short-bio">maksim, 17, russian</div>
+                <nav class="links">
+                    <a href="https://www.roblox.com/users/8135080197/profile">roblox</a>
+                    <a href="https://t.me/aetts">telegram</a>
+                    <a href="https://tiktok.com/@dropthiscult">tiktok</a>
+                    <a href="https://tripplemode.itch.io">itch.io</a>
+                    <a href="#">website</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- МУЗЫКАЛЬНЫЙ ДРОППЕР -->
+        <div class="music-wrapper" id="musicWrapper">
+            <!-- Заголовок, на который нажимаем -->
+            <div class="music-header" id="musicToggle">
+                <span>♡ listen to my music</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+
+            <!-- Скрытая часть с плеером -->
+            <div class="music-content">
+                <div class="player-inner">
+                    <audio id="audio" src="song.mp3"></audio>
+                    
+                    <div class="album-cover">
+                        <img src="cover.jpg" alt="Album Art">
+                    </div>
+
+                    <div class="track-info">
+                        <div class="song-title">cult/ure onmyneck333!!</div>
+                        <div class="artist-name">dropcult, 333x</div>
+                        
+                        <div class="progress-container" id="progressContainer">
+                            <div class="progress-bar" id="progressBar"></div>
+                        </div>
+                        
+                        <div class="time-info">
+                            <span id="currTime">0:00</span>
+                            <span id="durTime">0:00</span>
+                        </div>
+                    </div>
+
+                    <div class="controls">
+                        <button class="play-btn" id="playBtn">
+                            <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <svg id="pauseIcon" viewBox="0 0 24 24" style="display: none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Нижняя секция в рамке -->
+        <section class="info-box">
+            <div class="col left">
+                <div class="info-item">
+                   <div class="likes-block">
+                    <p><span class="label">ilove</span> < web dev, game dev, gaming, coding</p>
+                    <p><span class="label">iplay</span> < cs2, roblox, cod</p>
+                    <p><span class="label">skills</span> < html, css, js, react, typescript, vite</p>
+                </div>
+            </div>
+            </div>
+
+            <div class="col center-img">
+                <img src="cat2.png" alt="Doodle">
+            </div>
+        </section>
+
+        <footer>
+            © 2026
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Анимация появления
+            const container = document.getElementById('mainContainer');
+            setTimeout(() => { container.classList.add('visible'); }, 100);
+
+            // --- ЛОГИКА ДРОППЕРА ---
+            const musicToggle = document.getElementById('musicToggle');
+            const musicWrapper = document.getElementById('musicWrapper');
+
+            musicToggle.addEventListener('click', () => {
+                musicWrapper.classList.toggle('open');
+            });
+
+            // --- ЛОГИКА ПЛЕЕРА ---
+            const audio = document.getElementById('audio');
+            const playBtn = document.getElementById('playBtn');
+            const playIcon = document.getElementById('playIcon');
+            const pauseIcon = document.getElementById('pauseIcon');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressBar = document.getElementById('progressBar');
+            const currTime = document.getElementById('currTime');
+            const durTime = document.getElementById('durTime');
+
+            playBtn.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play();
+                    playIcon.style.display = 'none';
+                    pauseIcon.style.display = 'block';
+                } else {
+                    audio.pause();
+                    playIcon.style.display = 'block';
+                    pauseIcon.style.display = 'none';
+                }
+            });
+
+            audio.addEventListener('timeupdate', (e) => {
+                const { duration, currentTime } = e.srcElement;
+                const progressPercent = (currentTime / duration) * 100;
+                progressBar.style.width = `${progressPercent}%`;
+                currTime.innerText = formatTime(currentTime);
+                if(duration) durTime.innerText = formatTime(duration);
+            });
+
+            progressContainer.addEventListener('click', (e) => {
+                const width = progressContainer.clientWidth;
+                const clickX = e.offsetX;
+                const duration = audio.duration;
+                audio.currentTime = (clickX / width) * duration;
+            });
+
+            audio.addEventListener('ended', () => {
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+                progressBar.style.width = '0%';
+            });
+
+            function formatTime(time) {
+                const min = Math.floor(time / 60);
+                let sec = Math.floor(time % 60);
+                if (sec < 10) { sec = `0${sec}`; }
+                return `${min}:${sec}`;
+            }
+
+            // Эффект заголовка
+            const title = document.querySelector('h1');
+            title.addEventListener('click', () => {
+                title.style.color = '#d4a373';
+                setTimeout(() => { title.style.color = 'var(--accent-brown)'; }, 500);
+            });
+        });
+    </script>
+</body>
+</html>
