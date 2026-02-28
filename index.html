@@ -1,0 +1,2254 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>angelscult2017 • my world</title>
+    <link rel="icon" href="icon.jpeg" type="image/x-icon">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==================== CSS VARIABLES ==================== */
+        :root {
+            /* Colors - Light Mode (easier on eyes) */
+            --bg-primary: #fafafa;
+            --bg-secondary: #f0f0f0;
+            --bg-tertiary: #e5e5e5;
+
+            --text-primary: #1a1a1a;
+            --text-secondary: #525252;
+            --text-muted: #a3a3a3;
+
+            --accent: #0070f3;
+            --accent-hover: #0060df;
+            --success: #00c853;
+            --warning: #f5a623;
+            --error: #e00;
+
+            --border: #e5e5e5;
+            --border-hover: #d4d4d4;
+
+            /* Codewars colors */
+            --cw-red: #c81d29;
+            --cw-red-bg: #fff5f5;
+            --cw-purple: #8854d0;
+            --cw-blue: #3793df;
+            --cw-yellow: #eba722;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+            /* Transitions */
+            --duration-fast: 150ms;
+            --duration-normal: 250ms;
+            --duration-slow: 400ms;
+            --easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-full: 9999px;
+
+            /* Spacing */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-xxl: 48px;
+            --space-xxxl: 80px;
+        }
+
+        /* Dark Mode - System preference */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #0d0d0d;
+                --bg-secondary: #1a1a1a;
+                --bg-tertiary: #262626;
+
+                --text-primary: #fafafa;
+                --text-secondary: #a3a3a3;
+                --text-muted: #737373;
+
+                --border: #262626;
+                --border-hover: #404040;
+
+                --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+                --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+                --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+            }
+        }
+
+        /* Manual dark mode class - overrides system preference */
+        body.dark {
+            --bg-primary: #0d0d0d !important;
+            --bg-secondary: #1a1a1a !important;
+            --bg-tertiary: #262626 !important;
+
+            --text-primary: #fafafa !important;
+            --text-secondary: #a3a3a3 !important;
+            --text-muted: #737373 !important;
+
+            --border: #262626 !important;
+            --border-hover: #404040 !important;
+
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+        }
+
+        /* Manual light mode class - overrides system preference */
+        body:not(.dark) {
+            --bg-primary: #fafafa !important;
+            --bg-secondary: #f0f0f0 !important;
+            --bg-tertiary: #e5e5e5 !important;
+
+            --text-primary: #1a1a1a !important;
+            --text-secondary: #525252 !important;
+            --text-muted: #a3a3a3 !important;
+
+            --border: #e5e5e5 !important;
+            --border-hover: #d4d4d4 !important;
+
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
+        }
+
+        /* ==================== RESET & BASE ==================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            transition: background-color var(--duration-normal), color var(--duration-normal);
+        }
+
+        /* JetBrains Mono for code/tech elements */
+        .mono {
+            font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+        }
+
+        /* ==================== CONTAINER ==================== */
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: var(--space-xxxl) var(--space-lg);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--space-xxl) var(--space-md);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: var(--space-xl) var(--space-sm);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 100px var(--space-xl);
+            }
+        }
+
+        /* ==================== HERO SECTION ==================== */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: var(--space-xxxl) 0;
+            margin-bottom: var(--space-xxxl);
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: var(--space-xxl) 0;
+                margin-bottom: var(--space-xxl);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: var(--space-xl) 0;
+                margin-bottom: var(--space-xl);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero {
+                padding: var(--space-xxxl) 0;
+                margin-bottom: 100px;
+            }
+        }
+
+        .hero-image {
+            margin-bottom: var(--space-xl);
+        }
+
+        .hero-image-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all var(--duration-fast) var(--easing);
+        }
+
+        @media (max-width: 480px) {
+            .hero-image-wrapper {
+                width: 64px;
+                height: 64px;
+            }
+        }
+
+        .hero-image-wrapper:hover {
+            border-color: var(--text-primary);
+            transform: scale(1.02);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter var(--duration-normal);
+        }
+
+        .hero-image-wrapper:hover img {
+            filter: grayscale(0%);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-xs) var(--space-md);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            color: var(--text-primary);
+            margin-bottom: var(--space-lg);
+            transition: background var(--duration-fast);
+        }
+
+        .hero-badge:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .hero-badge i {
+            color: var(--success);
+            font-size: 6px;
+        }
+
+        .hero-title {
+            font-size: clamp(32px, 8vw, 56px);
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-md);
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 28px;
+            }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(14px, 4vw, 18px);
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: var(--space-lg);
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+        }
+
+        .hero-bio {
+            color: var(--text-secondary);
+            font-size: clamp(13px, 3.5vw, 15px);
+            max-width: 480px;
+            line-height: 1.7;
+            margin-bottom: var(--space-xl);
+        }
+
+        @media (max-width: 480px) {
+            .hero-subtitle {
+                font-size: 14px;
+            }
+
+            .hero-bio {
+                font-size: 13px;
+                line-height: 1.6;
+            }
+        }
+
+        /* ==================== SOCIAL LINKS ==================== */
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+            justify-content: center;
+        }
+
+        @media (max-width: 480px) {
+            .social-links {
+                gap: var(--space-xs);
+            }
+
+            .social-link {
+                padding: var(--space-xs) var(--space-sm);
+                font-size: 12px;
+            }
+
+            .social-link i {
+                font-size: 12px;
+            }
+        }
+
+        .social-link {
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm) var(--space-md);
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all var(--duration-normal) var(--easing);
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background: var(--text-primary);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            transition: height 0.4s var(--easing);
+            z-index: 0;
+        }
+
+        .social-link i,
+        .social-link span {
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s var(--easing);
+        }
+
+        .social-link:hover {
+            border-color: var(--text-primary);
+        }
+
+        .social-link:hover::before {
+            height: 100%;
+            border-radius: var(--radius-md);
+        }
+
+        .social-link:hover i,
+        .social-link:hover span {
+            color: var(--bg-primary);
+        }
+
+        .social-link i {
+            font-size: 14px;
+        }
+
+        .social-link.roblox:hover { color: #00a2ff; border-color: #00a2ff; }
+        .social-link.telegram:hover { color: #0088cc; border-color: #0088cc; }
+        .social-link.tiktok:hover { color: #ff0050; border-color: #ff0050; }
+        .social-link.itch:hover { color: #fa5c5c; border-color: #fa5c5c; }
+        .social-link.codewars:hover { color: #c81d29; border-color: #c81d29; }
+
+        /* ==================== SECTION ==================== */
+        .section {
+            margin-bottom: var(--space-xxxl);
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                margin-bottom: var(--space-xxl);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section {
+                margin-bottom: var(--space-xl);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .section {
+                margin-bottom: 100px;
+            }
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 13px;
+                margin-bottom: var(--space-md);
+            }
+        }
+
+        .section-title i {
+            color: var(--text-muted);
+        }
+
+        /* ==================== INFO GRID ==================== */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-lg);
+        }
+
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .info-grid {
+                gap: var(--space-md);
+            }
+        }
+
+        .info-card {
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            transition: all var(--duration-fast) var(--easing);
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background: var(--bg-secondary);
+            border-radius: 0;
+            transition: height 0.5s var(--easing);
+            z-index: 0;
+        }
+
+        .info-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-card:hover {
+            border-color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        .info-card:hover::before {
+            height: 100%;
+            border-radius: var(--radius-lg);
+        }
+
+        @media (max-width: 768px) {
+            .info-card {
+                padding: var(--space-md);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .info-card {
+                padding: var(--space-md);
+            }
+
+            .info-card-title {
+                font-size: 13px;
+            }
+
+            .info-item {
+                font-size: 12px;
+            }
+
+            .info-label {
+                min-width: 55px;
+                font-size: 11px;
+            }
+        }
+
+        @media (min-width: 641px) {
+            .info-card {
+                padding: var(--space-xl);
+            }
+        }
+
+        .info-card-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .info-card-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-md);
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .info-card-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+        }
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        @media (min-width: 641px) {
+            .info-list {
+                gap: 12px;
+            }
+        }
+
+        .info-item {
+            display: flex;
+            align-items: baseline;
+            gap: var(--space-sm);
+            font-size: 13px;
+        }
+
+        @media (min-width: 641px) {
+            .info-item {
+                padding: 3px 0;
+            }
+        }
+
+        .info-label {
+            color: var(--text-muted);
+            font-weight: 500;
+            min-width: 60px;
+            flex-shrink: 0;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .info-value {
+            color: var(--text-secondary);
+            flex: 1;
+            padding-left: var(--space-xs);
+        }
+
+        .skills-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-xs);
+            margin-top: var(--space-sm);
+        }
+
+        @media (max-width: 480px) {
+            .skills-tags {
+                gap: 4px;
+            }
+
+            .skill-tag {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+        }
+
+        .skill-tag {
+            position: relative;
+            overflow: hidden;
+            padding: var(--space-xs) var(--space-sm);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            color: var(--text-secondary);
+            transition: all var(--duration-normal) var(--easing);
+            cursor: pointer;
+        }
+
+        .skill-tag::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background: var(--text-primary);
+            border-radius: 0;
+            transition: all 0.4s var(--easing);
+            z-index: 0;
+        }
+
+        .skill-tag::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background: var(--bg-secondary);
+            border-radius: 0;
+            transition: all 0.3s var(--easing);
+            z-index: 0;
+        }
+
+        .skill-tag span {
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s var(--easing);
+            color: var(--text-secondary);
+        }
+
+        .skill-tag:hover {
+            border-color: var(--text-primary);
+        }
+
+        .skill-tag:hover::before {
+            height: 100%;
+            border-radius: var(--radius-sm);
+        }
+
+        .skill-tag:hover span {
+            color: var(--bg-primary);
+        }
+
+        .skill-tag:active::after {
+            height: 100%;
+            border-radius: var(--radius-sm);
+        }
+
+        .skill-tag:active span {
+            color: var(--text-secondary);
+        }
+
+        /* ==================== CODEWARS CARD ==================== */
+        .codewars-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            transition: all var(--duration-fast) var(--easing);
+        }
+
+        @media (max-width: 480px) {
+            .codewars-card {
+                padding: var(--space-sm);
+            }
+        }
+
+        @media (min-width: 641px) {
+            .codewars-card {
+                padding: var(--space-lg);
+            }
+        }
+
+        .codewars-card:hover {
+            border-color: var(--cw-red);
+            box-shadow: 0 0 30px rgba(200, 29, 41, 0.15);
+        }
+
+        /* Light mode Codewars card */
+        body:not(.dark) .codewars-card {
+            background: #f5f5f5;
+            border-color: #e5e5e5;
+        }
+
+        body:not(.dark) .codewars-card:hover {
+            border-color: var(--cw-red);
+            box-shadow: 0 0 30px rgba(200, 29, 41, 0.1);
+        }
+
+        .codewars-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .codewars-header-left {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            flex: 1;
+            min-width: 0;
+        }
+
+        .codewars-header-right {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            flex-shrink: 0;
+        }
+
+        .rank-badge-cw {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 22px;
+            padding: 0 var(--space-sm);
+            background: linear-gradient(135deg, #c81d29 0%, #a01622 100%);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            clip-path: polygon(10% 0, 100% 0, 100% 50%, 100% 100%, 10% 100%, 0 50%);
+            padding-left: var(--space-md);
+            white-space: nowrap;
+        }
+
+        .codewars-username-cw {
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1;
+        }
+
+        .codewars-honor {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            color: var(--text-muted);
+            font-size: 13px;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            line-height: 1;
+            padding-top: 1px;
+        }
+
+        @media (max-width: 480px) {
+            .codewars-honor {
+                font-size: 12px;
+            }
+        }
+
+        .codewars-honor i {
+            color: var(--cw-red);
+            font-size: 12px;
+        }
+
+        .codewars-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px 24px;
+            margin-bottom: var(--space-lg);
+        }
+
+        @media (min-width: 641px) {
+            .codewars-info-grid {
+                gap: 16px 28px;
+            }
+        }
+
+        .codewars-info-left {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .codewars-info-right {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .cw-info-item {
+            display: flex;
+            align-items: baseline;
+            gap: var(--space-sm);
+            font-size: 12px;
+        }
+
+        @media (min-width: 641px) {
+            .cw-info-item {
+                padding: 3px 0;
+            }
+
+            .codewars-info-left {
+                padding-right: var(--space-lg);
+            }
+        }
+
+        .cw-info-label {
+            color: var(--text-muted);
+            font-weight: 500;
+            min-width: 85px;
+            flex-shrink: 0;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .cw-info-value {
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            font-size: 12px;
+            word-break: break-word;
+        }
+
+        .codewars-footer {
+            padding-top: var(--space-md);
+            border-top: 1px solid var(--border);
+            margin-top: var(--space-md);
+        }
+
+        @media (min-width: 641px) {
+            .codewars-footer {
+                margin-top: var(--space-lg);
+            }
+        }
+
+        .codewars-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm) var(--space-md);
+            background: transparent;
+            border: 1px solid var(--cw-red);
+            border-radius: var(--radius-sm);
+            color: var(--cw-red);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            transition: all var(--duration-fast);
+        }
+
+        .codewars-link:hover {
+            background: var(--cw-red);
+            color: #fff;
+        }
+
+        .codewars-link i {
+            transition: transform var(--duration-fast);
+        }
+
+        .codewars-link:hover i {
+            transform: translateX(4px);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .codewars-card {
+                padding: var(--space-sm);
+            }
+
+            .codewars-header {
+                display: flex;
+                align-items: center;
+                flex-wrap: nowrap;
+                padding-bottom: var(--space-sm);
+                margin-bottom: var(--space-sm);
+            }
+
+            .codewars-header-left {
+                display: flex;
+                align-items: center;
+                gap: var(--space-xs);
+                flex: 1;
+                min-width: 0;
+            }
+
+            .codewars-header-right {
+                display: flex;
+                align-items: center;
+                gap: var(--space-xs);
+                flex-shrink: 0;
+                margin-left: auto;
+            }
+
+            .rank-badge-cw {
+                font-size: 9px;
+                padding: 0 4px;
+                height: 18px;
+            }
+
+            .codewars-username-cw {
+                font-size: 12px;
+            }
+
+            .codewars-honor {
+                font-size: 11px;
+                padding-top: 0;
+            }
+
+            .codewars-info-grid {
+                gap: 8px 12px;
+            }
+
+            .codewars-info-left,
+            .codewars-info-right {
+                gap: 6px;
+            }
+
+            .cw-info-item {
+                gap: var(--space-xs);
+                font-size: 10px;
+            }
+
+            .cw-info-label {
+                min-width: 65px;
+                font-size: 9px;
+            }
+
+            .cw-info-value {
+                font-size: 10px;
+            }
+        }
+
+        /* Loading state */
+        .codewars-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-xl);
+            gap: var(--space-md);
+        }
+
+        .codewars-loading .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #333;
+            border-top-color: var(--cw-red);
+            border-radius: var(--radius-full);
+            animation: spin 1s linear infinite;
+        }
+
+        /* Light mode spinner */
+        body:not(.dark) .codewars-loading .spinner {
+            border-color: #e5e5e5;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ==================== FOOTER ==================== */
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-xl) 0;
+            border-top: 1px solid var(--border);
+            margin-top: var(--space-xxxl);
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .footer-heart {
+            color: #e00;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .footer {
+                flex-direction: column;
+                gap: var(--space-md);
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer {
+                padding: var(--space-lg) 0;
+                margin-top: var(--space-xxl);
+            }
+
+            .footer-text {
+                font-size: 13px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .footer {
+                padding: var(--space-xxl) 0;
+                margin-top: 100px;
+            }
+        }
+
+        /* ==================== DARK MODE TOGGLE ==================== */
+        .theme-toggle {
+            position: fixed;
+            top: var(--space-lg);
+            right: var(--space-lg);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--duration-fast);
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        @media (max-width: 480px) {
+            .theme-toggle {
+                top: var(--space-md);
+                right: var(--space-md);
+                width: 36px;
+                height: 36px;
+            }
+
+            .theme-toggle i {
+                font-size: 14px;
+            }
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background: var(--text-primary);
+            border-radius: 0;
+            transition: height 0.4s var(--easing);
+            z-index: 0;
+        }
+
+        .theme-toggle i {
+            font-size: 16px;
+            transition: all 0.3s var(--easing);
+            position: relative;
+            z-index: 1;
+        }
+
+        .theme-toggle:hover::before {
+            height: 100%;
+            border-radius: var(--radius-full);
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--text-primary);
+        }
+
+        .theme-toggle:hover i {
+            color: var(--bg-primary);
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        .theme-toggle:active i {
+            transform: scale(0.9);
+        }
+
+        /* ==================== UTILITIES ==================== */
+        .hidden {
+            display: none !important;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Element animations */
+        .hero-badge {
+            animation: fadeInUp 0.5s var(--easing) forwards;
+        }
+
+        .hero-title {
+            opacity: 0;
+            animation: fadeInUp 0.6s var(--easing) 0.1s forwards;
+        }
+
+        .hero-subtitle {
+            opacity: 0;
+            animation: fadeInUp 0.5s var(--easing) 0.2s forwards;
+        }
+
+        .hero-bio {
+            opacity: 0;
+            animation: fadeInUp 0.5s var(--easing) 0.3s forwards;
+        }
+
+        .hero-image-wrapper {
+            opacity: 0;
+            animation: scaleIn 0.6s var(--easing) 0.15s forwards;
+        }
+
+        .social-link {
+            opacity: 0;
+            animation: fadeInUp 0.4s var(--easing) forwards;
+        }
+
+        .social-link:nth-child(1) { animation-delay: 0.4s; }
+        .social-link:nth-child(2) { animation-delay: 0.45s; }
+        .social-link:nth-child(3) { animation-delay: 0.5s; }
+        .social-link:nth-child(4) { animation-delay: 0.55s; }
+        .social-link:nth-child(5) { animation-delay: 0.6s; }
+
+        .section {
+            opacity: 0;
+            animation: fadeInUp 0.6s var(--easing) 0.3s forwards;
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-hover);
+            border-radius: var(--radius-full);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+        }
+
+        /* ==================== PRELOADER ==================== */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity var(--duration-slow) var(--easing), visibility var(--duration-slow) var(--easing);
+        }
+
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .preloader-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: var(--space-xl);
+            max-width: 480px;
+        }
+
+        .preloader-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: var(--space-lg);
+            position: relative;
+        }
+
+        .preloader-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border);
+            filter: grayscale(100%);
+            transition: filter var(--duration-normal);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        .preloader-icon {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .preloader-quote {
+            font-size: clamp(16px, 4vw, 20px);
+            font-weight: 300;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: var(--space-md);
+            font-style: italic;
+        }
+
+        .preloader-quote-author {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            margin-top: var(--space-sm);
+        }
+
+        .preloader-button {
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm) var(--space-lg);
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            cursor: pointer;
+            transition: all var(--duration-normal) var(--easing);
+            margin-top: var(--space-lg);
+        }
+
+        .preloader-button::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background: var(--text-primary);
+            border-radius: 0;
+            transition: height 0.4s var(--easing);
+            z-index: 0;
+        }
+
+        .preloader-button span,
+        .preloader-button i {
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s var(--easing);
+        }
+
+        .preloader-button:hover {
+            border-color: var(--text-primary);
+        }
+
+        .preloader-button:hover::before {
+            height: 100%;
+            border-radius: var(--radius-md);
+        }
+
+        .preloader-button:hover span,
+        .preloader-button:hover i {
+            color: var(--bg-primary);
+        }
+
+        .preloader-button:active {
+            transform: scale(0.98);
+        }
+
+        .preloader-button i {
+            font-size: 12px;
+            transition: transform var(--duration-fast);
+        }
+
+        .preloader-button:hover i {
+            transform: translateX(2px);
+        }
+
+        .preloader-divider {
+            width: 40px;
+            height: 1px;
+            background: var(--border);
+            margin: var(--space-lg) 0;
+        }
+
+        #mainContainer {
+            opacity: 0;
+            transition: opacity var(--duration-slow) var(--easing);
+        }
+
+        #mainContainer.visible {
+            opacity: 1;
+        }
+
+        @media (max-width: 480px) {
+            .preloader-content {
+                padding: var(--space-lg);
+            }
+
+            .preloader-icon {
+                width: 48px;
+                height: 48px;
+            }
+        }
+
+        /* ==================== MUSIC CARD - FLOATING PLAYER ==================== */
+        .music-wrapper {
+            position: fixed;
+            top: var(--space-lg);
+            left: var(--space-lg);
+            z-index: 1000;
+        }
+
+        @media (max-width: 480px) {
+            .music-wrapper {
+                top: var(--space-md);
+                left: var(--space-md);
+            }
+        }
+
+        .music-toggle-btn {
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(229, 229, 229, 0.5);
+            border-radius: var(--radius-full);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all var(--duration-normal) var(--easing);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            flex-shrink: 0;
+        }
+
+        body.dark .music-toggle-btn {
+            background: rgba(26, 26, 26, 0.85);
+            border: 1px solid rgba(64, 64, 64, 0.5);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .music-toggle-btn i {
+            font-size: 16px;
+            transition: transform var(--duration-normal) var(--easing);
+        }
+
+        .music-toggle-btn:hover {
+            border-color: var(--text-primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            transform: scale(1.05);
+        }
+
+        body.dark .music-toggle-btn:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .music-toggle-btn:active {
+            transform: scale(0.95);
+        }
+
+        .music-toggle-btn.active i {
+            transform: rotate(90deg);
+        }
+
+        .music-card {
+            position: absolute;
+            left: 0;
+            top: 50px;
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(229, 229, 229, 0.5);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all var(--duration-normal) var(--easing);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            opacity: 0;
+            pointer-events: none;
+            min-width: 300px;
+        }
+
+        body.dark .music-card {
+            background: rgba(26, 26, 26, 0.9);
+            border: 1px solid rgba(64, 64, 64, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .music-card.open {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .music-card:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        body.dark .music-card:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .music-cover {
+            width: 100%;
+            aspect-ratio: 1;
+            max-height: 200px;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 48px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .music-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .music-cover .cover-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 48px;
+            display: none;
+        }
+
+        .music-cover img[src="cover.jpg"][style*="display: none"] ~ .cover-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .music-cover.playing {
+            animation: pulseCover 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseCover {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .music-track-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            text-align: center;
+        }
+
+        .music-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .music-artist {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+        }
+
+        .music-progress {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .music-progress-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--bg-secondary);
+            border-radius: 2px;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .music-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--success) 0%, #00e676 100%);
+            border-radius: 2px;
+            transition: width 0.1s linear;
+        }
+
+        .music-time {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+        }
+
+        .music-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-md);
+            padding-top: var(--space-sm);
+            border-top: 1px solid var(--border);
+        }
+
+        .music-visualizer {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 16px;
+        }
+
+        .music-visualizer-bar {
+            width: 3px;
+            background: var(--success);
+            border-radius: 2px;
+            animation: visualize 0.5s ease-in-out infinite alternate;
+        }
+
+        .music-visualizer-bar:nth-child(1) { height: 40%; animation-delay: 0s; }
+        .music-visualizer-bar:nth-child(2) { height: 100%; animation-delay: 0.1s; }
+        .music-visualizer-bar:nth-child(3) { height: 60%; animation-delay: 0.2s; }
+        .music-visualizer-bar:nth-child(4) { height: 80%; animation-delay: 0.3s; }
+
+        .music-play-btn {
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all var(--duration-normal) var(--easing);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .music-play-btn i {
+            font-size: 16px;
+            transition: transform var(--duration-fast);
+        }
+
+        .music-play-btn:hover {
+            border-color: var(--text-primary);
+            box-shadow: var(--shadow-md);
+            transform: scale(1.05);
+        }
+
+        .music-play-btn:hover i {
+            transform: scale(1.1);
+        }
+
+        .music-play-btn:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes visualize {
+            from { height: 20%; }
+            to { height: 100%; }
+        }
+    </style></head>
+<body>
+    <!-- ==================== PRELOADER ==================== -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-icon">
+                <img src="cat.png" alt="Profile">
+            </div>
+
+            <blockquote class="preloader-quote mono">
+                "The only way to do great work is to love what you do."
+                <cite class="preloader-quote-author">— Steve Jobs</cite>
+            </blockquote>
+
+            <div class="preloader-divider"></div>
+
+            <button class="preloader-button mono" id="startButton">
+                <i class="fas fa-arrow-right"></i>
+                <span>start</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Music Control - Floating Player -->
+    <div class="music-wrapper">
+        <button class="music-toggle-btn" id="musicToggleBtn" aria-label="Toggle music player">
+            <i class="fas fa-music"></i>
+        </button>
+        <div class="music-card" id="musicCard">
+            <div class="music-cover" id="musicCover">
+                <img src="cover.jpg" alt="Cover" id="musicCoverImg">
+                <i class="fas fa-music cover-icon"></i>
+            </div>
+            <div class="music-track-info">
+                <div class="music-title" id="musicTitle">Loading...</div>
+                <div class="music-artist" id="musicArtist">>_<</div>
+            </div>
+            <div class="music-progress">
+                <div class="music-progress-bar">
+                    <div class="music-progress-fill" id="musicProgressFill"></div>
+                </div>
+                <div class="music-time">
+                    <span class="music-current-time" id="musicCurrentTime">0:00</span>
+                    <span class="music-duration" id="musicDuration">0:00</span>
+                </div>
+            </div>
+            <div class="music-controls">
+                <div class="music-visualizer">
+                    <div class="music-visualizer-bar"></div>
+                    <div class="music-visualizer-bar"></div>
+                    <div class="music-visualizer-bar"></div>
+                    <div class="music-visualizer-bar"></div>
+                </div>
+                <button class="music-play-btn" id="musicPlayBtn" aria-label="Play/Pause music">
+                    <i class="fas fa-pause"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio element (hidden) -->
+    <audio id="backgroundAudio" preload="auto" loop>
+        <source src="onnana.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <div class="container" id="mainContainer">
+
+        <!-- Hero Section -->
+        <header class="hero">
+            <div class="hero-image">
+                <div class="hero-image-wrapper" id="profileImage">
+                    <img src="cat.png" alt="Profile" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23f5f5f5%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%22 y=%2255%22 font-family=%22Inter%22 font-size=%2212%22 fill=%22%23999%22 text-anchor=%22middle%22%3Edropcult%3C/text%3E%3C/svg%3E'">
+                </div>
+            </div>
+
+            <span class="hero-badge">
+                <i class="fas fa-circle"></i>
+                Available for projects
+            </span>
+
+            <h1 class="hero-title" id="heroTitle">angelscult2017</h1>
+            <p class="hero-subtitle">maksim • 17 • russian</p>
+            <p class="hero-bio">
+                full-stack developer
+            </p>
+
+            <nav class="social-links">
+                <a href="https://www.roblox.com/users/8135080197/profile" class="social-link roblox" target="_blank" rel="noopener">
+                    <i class="fas fa-gamepad"></i> <span>roblox</span>
+                </a>
+                <a href="https://t.me/aetts" class="social-link telegram" target="_blank" rel="noopener">
+                    <i class="fab fa-telegram"></i> <span>telegram</span>
+                </a>
+                <a href="https://tiktok.com/@dropthiscult" class="social-link tiktok" target="_blank" rel="noopener">
+                    <i class="fab fa-tiktok"></i> <span>tiktok</span>
+                </a>
+                <a href="https://tripplemode.itch.io" class="social-link itch" target="_blank" rel="noopener">
+                    <i class="fab fa-itch-io"></i> <span>itch.io</span>
+                </a>
+                <a href="https://www.codewars.com/users/angelscult2017" class="social-link codewars" target="_blank" rel="noopener">
+                    <i class="fas fa-code"></i> <span>codewars</span>
+                </a>
+            </nav>
+        </header>
+
+        <!-- Info Grid -->
+        <section class="section">
+            <div class="info-grid">
+                <!-- Interests Card -->
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <div class="info-card-icon">                            <i class="fas fa-heart"></i>
+                        </div>
+                        <span class="info-card-title">passions</span>
+                    </div>
+                    <div class="info-list">
+                        <div class="info-item">
+                            <span class="info-label">love</span>
+                            <span class="info-value">music, web dev, game dev, programming</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">play</span>
+                            <span class="info-value">cs2, roblox, cod</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skills Card -->
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <div class="info-card-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <span class="info-card-title">tech stack</span>
+                    </div>
+                    <div class="skills-tags">
+                        <span class="skill-tag"><span>C++</span></span>
+                        <span class="skill-tag"><span>Python</span></span>
+                        <span class="skill-tag"><span>HTML</span></span>
+                        <span class="skill-tag"><span>CSS</span></span>
+                        <span class="skill-tag"><span>JavaScript</span></span>
+                        <span class="skill-tag"><span>TypeScript</span></span>
+                        <span class="skill-tag"><span>React</span></span>
+                        <span class="skill-tag"><span>Vue</span></span>
+                        <span class="skill-tag"><span>Next.js</span></span>
+                        <span class="skill-tag"><span>Nuxt</span></span>
+                        <span class="skill-tag"><span>Redux</span></span>
+                        <span class="skill-tag"><span>Vuex</span></span>
+                        <span class="skill-tag"><span>Tailwind</span></span>
+                        <span class="skill-tag"><span>Bootstrap</span></span>
+                        <span class="skill-tag"><span>Sass</span></span>
+                        <span class="skill-tag"><span>Less</span></span>
+                        <span class="skill-tag"><span>Vite</span></span>
+                        <span class="skill-tag"><span>Node.js</span></span>
+                        <span class="skill-tag"><span>PHP</span></span>
+                        <span class="skill-tag"><span>Express</span></span>
+                        <span class="skill-tag"><span>Flask</span></span>
+                        <span class="skill-tag"><span>MySQL</span></span>
+                        <span class="skill-tag"><span>React Native</span></span>
+                        <span class="skill-tag"><span>Expo</span></span>
+                    </div>
+                </div>
+
+                <!-- Codewars Card -->
+                <div class="codewars-card" id="codewarsCard">
+                    <div class="codewars-header">
+                        <div class="codewars-brand">
+                            <i class="fas fa-gem"></i>
+                            <span>codewars</span>
+                        </div>
+                        <span class="codewars-username">@angelscult2017</span>
+                    </div>
+                                        <div id="codewarsContent">
+                        <!-- Loading State -->
+                        <div class="codewars-loading" id="codewarsLoading">
+                            <div class="spinner"></div>
+                            <span style="color: var(--text-muted); font-size: 0.875rem;">Fetching stats...</span>
+                        </div>
+                        
+                        <!-- Content will be injected here -->
+                        <div id="codewarsData" class="hidden">
+                            <div class="codewars-header">
+                                <div class="codewars-header-left">
+                                    <span class="rank-badge-cw" id="cwRank">4 kyu</span>
+                                    <span class="codewars-username-cw" id="cwUsername">angelscult2017</span>
+                                </div>
+                                <div class="codewars-header-right">
+                                    <div class="codewars-honor">
+                                        <i class="fas fa-gem"></i>
+                                        <span id="cwHonor">--</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="codewars-info-grid">
+                                <div class="codewars-info-left">
+                                    <div class="cw-info-item">
+                                        <span class="cw-info-label">Name:</span>
+                                        <span class="cw-info-value mono" id="cwName">angelscult2017</span>
+                                    </div>
+                                    <div class="cw-info-item">
+                                        <span class="cw-info-label">Clan:</span>
+                                        <span class="cw-info-value mono" id="cwClan">Unknown</span>
+                                    </div>
+                                    <div class="cw-info-item">
+                                        <span class="cw-info-label">Completed:</span>
+                                        <span class="cw-info-value mono" id="cwCompleted">--</span>
+                                    </div>
+                                </div>
+                                <div class="codewars-info-right">
+                                    <div class="cw-info-item">
+                                        <span class="cw-info-label">Member:</span>
+                                        <span class="cw-info-value mono" id="cwMemberSince">May 2023</span>
+                                    </div>
+                                    <div class="cw-info-item">
+                                        <span class="cw-info-label">Last Seen:</span>
+                                        <span class="cw-info-value mono" id="cwLastSeen">Feb 2026</span>
+                                    </div>
+                                    <div class="cw-info-item">
+                                        <span class="cw-info-label">Rank:</span>
+                                        <span class="cw-info-value mono" id="cwPosition">#--</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="codewars-footer">
+                                <a href="https://www.codewars.com/users/angelscult2017" target="_blank" rel="noopener" class="codewars-link">
+                                    View Profile <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="footer-text">© 2026 angelscult2017 • crafted with <span class="footer-heart">♥</span> and lots of coffee</p>
+        </footer>
+    </div>
+
+    <script>
+        // ==================== THEME TOGGLE ====================
+        function initThemeToggle() {
+            const toggle = document.getElementById('themeToggle');
+            const icon = toggle?.querySelector('i');
+
+            if (!toggle || !icon) {
+                console.error('Theme toggle elements not found');
+                return;
+            }
+
+            // Default to light theme, only use dark if explicitly saved
+            const savedTheme = localStorage.getItem('theme');
+
+            // Apply dark theme only if explicitly saved
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+
+            toggle.addEventListener('click', () => {
+                const isDark = !document.body.classList.contains('dark');
+                document.body.classList.toggle('dark');
+
+                if (isDark) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        }
+
+        // ==================== CODEWARS API ====================
+        async function fetchCodewarsData() {
+            const username = 'angelscult2017';
+            const apiUrl = `https://www.codewars.com/api/v1/users/${username}`;
+            const timeout = 5000;
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => {
+                controller.abort();
+                showCodewarsError();
+            }, timeout);
+
+            try {
+                const response = await fetch(apiUrl, { signal: controller.signal });
+                clearTimeout(timeoutId);
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch Codewars data');
+                }
+
+                const data = await response.json();
+                updateCodewarsUI(data);
+
+            } catch (error) {
+                clearTimeout(timeoutId);
+                console.error('Codewars API Error:', error);
+                showCodewarsError();
+            }
+        }
+
+        function updateCodewarsUI(data) {
+            document.getElementById('codewarsLoading').classList.add('hidden');
+            document.getElementById('codewarsData').classList.remove('hidden');
+
+            const rank = data.ranks?.overall;
+            if (rank) {
+                document.getElementById('cwRank').textContent = rank.name;
+            }
+
+            document.getElementById('cwHonor').textContent = data.honor?.toLocaleString() || '--';
+            document.getElementById('cwCompleted').textContent = data.codeChallenges?.totalCompleted || '--';
+            document.getElementById('cwPosition').textContent = `#${(data.leaderboardPosition || 0).toLocaleString()}`;
+
+            // Update username if available
+            if (data.username) {
+                document.getElementById('cwUsername').textContent = data.username;
+            }
+
+            // Update name if available
+            if (data.name) {
+                document.getElementById('cwName').textContent = data.name;
+            }
+
+            // Update clan if available
+            if (data.clan) {
+                document.getElementById('cwClan').textContent = data.clan;
+            } else {
+                document.getElementById('cwClan').textContent = 'Unknown';
+            }
+
+            // Update member since
+            if (data.createdAt) {
+                const date = new Date(data.createdAt);
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                document.getElementById('cwMemberSince').textContent = `${months[date.getMonth()]} ${date.getFullYear()}`;
+            }
+        }
+
+        function showCodewarsError() {
+            document.getElementById('codewarsLoading').classList.add('hidden');
+            document.getElementById('codewarsData').classList.remove('hidden');
+            document.getElementById('codewarsData').innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; padding: var(--space-xl); gap: var(--space-md);">
+                    <div class="codewars-avatar" style="width: 48px; height: 48px; margin-bottom: var(--space-md);">
+                        <i class="fas fa-code" style="font-size: 24px;"></i>
+                    </div>
+                    <i class="fas fa-exclamation-circle" style="color: var(--cw-red); font-size: 24px;"></i>
+                    <span style="color: var(--text-secondary); font-size: 13px; text-align: center;">Could not load Codewars stats<br>(API unavailable)</span>
+                </div>
+            `;
+        }
+
+        // ==================== INTERACTIONS ====================
+        function initInteractions() {
+            const title = document.getElementById('heroTitle');
+
+            title.addEventListener('click', () => {
+                navigator.clipboard?.writeText('angelscult2017');
+            });
+        }
+
+        // ==================== PRELOADER ====================
+        function initPreloader() {
+            const preloader = document.getElementById('preloader');
+            const mainContainer = document.getElementById('mainContainer');
+            const startButton = document.getElementById('startButton');
+            const audio = document.getElementById('backgroundAudio');
+
+            if (!preloader || !mainContainer || !startButton || !audio) {
+                console.error('Preloader elements not found');
+                return;
+            }
+
+            startButton.addEventListener('click', function() {
+                // Fade out preloader
+                preloader.classList.add('hidden');
+                
+                // Fade in main content
+                mainContainer.classList.add('visible');
+                
+                // Play audio (user interaction allows autoplay)
+                audio.play().catch(function(error) {
+                    console.warn('Audio playback failed:', error);
+                });
+            });
+        }
+
+        // ==================== MUSIC CONTROL ====================
+        function initMusicControl() {
+            const audio = document.getElementById('backgroundAudio');
+            const musicToggleBtn = document.getElementById('musicToggleBtn');
+            const musicPlayBtn = document.getElementById('musicPlayBtn');
+            const musicCard = document.getElementById('musicCard');
+            const musicCover = document.getElementById('musicCover');
+            const musicCoverImg = document.getElementById('musicCoverImg');
+            const musicTitle = document.getElementById('musicTitle');
+            const musicArtist = document.getElementById('musicArtist');
+            const musicProgressFill = document.getElementById('musicProgressFill');
+            const musicCurrentTime = document.getElementById('musicCurrentTime');
+            const musicDuration = document.getElementById('musicDuration');
+            const toggleIcon = musicToggleBtn.querySelector('i');
+            const playIcon = musicPlayBtn.querySelector('i');
+
+            if (!audio || !musicToggleBtn || !musicPlayBtn || !musicCard) {
+                console.error('Music control elements not found');
+                return;
+            }
+
+            // Handle cover image error - hide image if not found
+            if (musicCoverImg) {
+                musicCoverImg.addEventListener('error', function() {
+                    this.style.display = 'none';
+                });
+            }
+
+            // Track info - edit these values to your preference
+            const trackInfo = {
+                title: ' i #### u',
+                artist: '>_<'
+            };
+
+            // Start playing by default
+            let isPlaying = true;
+            let isOpen = false;
+
+            function formatTime(seconds) {
+                if (isNaN(seconds)) return '0:00';
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
+            }
+
+            function updateUI() {
+                if (isPlaying) {
+                    playIcon.classList.remove('fa-play');
+                    playIcon.classList.add('fa-pause');
+                    musicCover.classList.add('playing');
+                } else {
+                    playIcon.classList.remove('fa-pause');
+                    playIcon.classList.add('fa-play');
+                    musicCover.classList.remove('playing');
+                }
+            }
+
+            function updateProgress() {
+                const current = audio.currentTime || 0;
+                const duration = audio.duration || 0;
+                
+                if (duration > 0) {
+                    const progress = (current / duration) * 100;
+                    musicProgressFill.style.width = progress + '%';
+                    musicCurrentTime.textContent = formatTime(current);
+                    musicDuration.textContent = formatTime(duration);
+                }
+            }
+
+            function closeCard() {
+                isOpen = false;
+                musicCard.classList.remove('open');
+                toggleIcon.classList.remove('active');
+            }
+
+            function toggleCard() {
+                isOpen = !isOpen;
+                if (isOpen) {
+                    musicCard.classList.add('open');
+                    toggleIcon.classList.add('active');
+                } else {
+                    musicCard.classList.remove('open');
+                    toggleIcon.classList.remove('active');
+                }
+            }
+
+            // Set track info
+            musicTitle.textContent = trackInfo.title;
+            musicArtist.textContent = trackInfo.artist;
+
+            // Toggle player visibility
+            musicToggleBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleCard();
+            });
+
+            // Toggle play/pause
+            musicPlayBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (isPlaying) {
+                    audio.pause();
+                    isPlaying = false;
+                } else {
+                    audio.play().catch(function(error) {
+                        console.warn('Audio playback failed:', error);
+                        return;
+                    });
+                    isPlaying = true;
+                }
+                updateUI();
+            });
+
+            // Close on click outside
+            document.addEventListener('click', function(e) {
+                if (isOpen && !musicCard.contains(e.target) && !musicToggleBtn.contains(e.target)) {
+                    closeCard();
+                }
+            });
+
+            // Update progress on time update
+            audio.addEventListener('timeupdate', updateProgress);
+
+            // Update duration when loaded
+            audio.addEventListener('loadedmetadata', function() {
+                musicDuration.textContent = formatTime(audio.duration);
+            });
+
+            // Handle audio ended
+            audio.addEventListener('ended', function() {
+                isPlaying = false;
+                updateUI();
+                musicProgressFill.style.width = '100%';
+            });
+
+            // Click on progress bar to seek
+            document.querySelector('.music-progress-bar')?.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const percent = (e.clientX - rect.left) / rect.width;
+                audio.currentTime = percent * audio.duration;
+            });
+
+            // Initialize UI state (playing by default)
+            updateUI();
+        }
+
+        // ==================== INITIALIZATION ====================
+        function init() {
+            initPreloader();
+            initThemeToggle();
+            initInteractions();
+            fetchCodewarsData();
+            initMusicControl();
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
